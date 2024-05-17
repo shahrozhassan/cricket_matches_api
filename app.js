@@ -16,9 +16,14 @@ function displayMatchData(data) {
         return;
     }
 
-    data.forEach(match => {
+    data.forEach((match, index) => {
         const matchDiv = document.createElement('div');
         matchDiv.classList.add('match-item');
+
+        // Add team names heading
+        const teamNamesHeading = document.createElement('h2');
+        teamNamesHeading.textContent = `${match.team_1} vs ${match.team_2}`;
+        matchDiv.appendChild(teamNamesHeading);
 
         const matchString = `${match.team_1} vs ${match.team_2} ${match.match_title.split(',')[0]}\\n${match.team_1} ${match.team_1_Score} over ${match.team_1_overs}\\n${match.batsman_1_name} ${match.batsman_1_score} (${match.batsman_1_balls_played})\\n${match.batsman_2_name} ${match.batsman_2_score} (${match.batsman_2_balls_played})\\n${match.bowler_1_name} ${match.bowler_1_wickets_taken}/${match.bowler_1_runs}, ${match.bowler_2_name} ${match.bowler_2_wickets_taken}/${match.bowler_2_runs}\\n${match.status}`;
 
@@ -28,5 +33,11 @@ function displayMatchData(data) {
 
         matchDiv.appendChild(pre);
         container.appendChild(matchDiv);
+
+        // Add a horizontal rule (<hr>) after each match item except the last one
+        if (index < data.length - 1) {
+            const hr = document.createElement('hr');
+            container.appendChild(hr);
+        }
     });
 }
